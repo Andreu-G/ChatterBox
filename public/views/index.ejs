@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ChatterBox</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel='stylesheet' href="/style.css">
+  </head>
+
+  <body class="m-0 p-0">
+    
+    <div id="login-box">
+
+      <div class="text-center align-self-center">
+        <label for="name" class="text-light">Name</label><br>
+        <p></p>
+        <input type="text" name="name" id="login-text" placeholder="Your name" class="text-center" maxlength="10"><br>
+        <p></p>
+        <label for="color" class="text-light">Color</label><br>
+        <p></p>
+        <input type="color" name="color" id="login-color" value="#FFFFFF" class="align-self-center"><br>
+        <p></p>
+        <button type="submit" id="submit-btn" onclick="Login()" class="btn btn-light">Enter chat</button>
+      </div>
+
+    </div>
+
+    <div id="main-content" class="d-flex justify-content-around">
+
+        <div id="content-box" class="mb-3 m-3 mb-md-0 border border-1 border-dark d-flex flex-column flex-nowrap overflow-hidden">
+
+          <div id="content" class=" border-bottom-0">
+          </div>
+          <div id="write-area" class="content-glow-white d-flex flex-row flex-nowrap justify-content-around flex-grow-1 align-items-center">
+            <div id="#write-area_content" class="ms-0 w-75 d-inline-block flexd-grow-1 mt-2 mb-2">
+                  <input type="text" id="user-text" class="form-control border-0 shadow-none" autocomplete="off" id="user-text" placeholder="Write something...">
+            </div>
+            <button id="write-area_btn" type="submit" onclick="SendMessage()" class="btn btn-light">Submit</button>
+          </div>
+        </div>
+
+            <div id="separator"></div>
+
+        <div id="userlist-box" class=" m-3 border border-1 border-dark">
+
+          <h3 class="text-center align-content-center mt-3">User List</h3>
+          <div class="separator mt-3 mb-3"></div>
+          <div id="userlist"></div>
+        </div>
+    </div>
+
+
+    <footer class="mt-5 mb-3">
+
+      <div class="flex-footer">
+
+        <div class="footer-separator"><br></div>
+
+        <div class="footer-item">© ChatterBox 2022</div>
+    </div>
+    </footer>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+
+        var socket = io();
+        var userValues = {};
+        var isLoggedIn = false;
+
+        document.querySelector('#login-text').addEventListener('keypress', () => {
+          if(event.key === 'Enter')
+          {
+            Login();
+          }
+        });
+
+        document.querySelector('#main-content').addEventListener('keypress', () => {
+
+        if (event.key === 'Enter' && isLoggedIn) {
+          SendMessage();
+        }
+        });
+
+        socket.on('join-chat', (userList) => {
+          
+          document.getElementById('login-box').outerHTML = '';
+          UpdateUserList(userList);
+
+        });
+
+        socket.on('update-userlist', userList => {
+          UpdateUserList(userList);
+        })
+
+        socket.on('receive-message', (messageInfo) => {
+          ReceiveMessage(messageInfo);
+        });
+
+        function Login() 
+        {
+          userValues = {
+                name: document.querySelector('#login-text').value,
+                color: document.querySelector('#login-color').value
+          }
+          socket.emit('request-join', userValues);
+          isLoggedIn = true;
+          document.querySelector('#login-box').outerHTML = '';
+        }
+
+        function UpdateUserList(userList)
+        {
+          document.querySelector('#userlist').innerHTML = '';
+          userList.forEach(user => {
+            let newUser = document.createElement('article');
+            newUser.textContent = user.name;
+            newUser.style.color = user.color;
+            document.querySelector('#userlist').appendChild(newUser);
+          });
+        }
+
+        function GetCurrentDate(){
+
+          let date = new Date();
+          let formattedDate = `${String(date.getHours()).padStart(2,0)}:${String(date.getMinutes()).padStart(1, 0)}:${String(date.getSeconds()).padStart(1, 0)}`;
+          return formattedDate;
+          console.log(formattedDate);
+        }
+
+        function SendMessage() {
+
+          let date = GetCurrentDate();
+
+          let username = document.createElement('div');
+          username.textContent = `${userValues.name}, ${date}`;
+          username.style.color = userValues.color;
+
+          let newMessage = document.createElement('article');
+          newMessage.textContent = document.querySelector('#user-text').value;
+          newMessage.style.boxShadow = `0 0 12px ${userValues.color}`
+          newMessage.setAttribute('class', 'text-self');
+          newMessage.appendChild(username);
+          document.querySelector('#content').appendChild(newMessage);
+
+          messageData = {
+            name: userValues.name,
+            color: userValues.color,
+            message: document.querySelector('#user-text').value,
+            date
+          }
+
+          socket.emit('request-send_message', messageData);
+          document.querySelector('#user-text').value = '';
+        };
+
+        function ReceiveMessage(message){
+
+          let date = GetCurrentDate();
+          let username = document.createElement('div');
+          username.textContent = `${message.name}, ${message.date}`;
+          username.style.color = message.color;
+
+          let newMessage = document.createElement('article');
+          newMessage.textContent = message.message;
+          newMessage.style.boxShadow = `0 0 12px ${message.color}`
+          newMessage.setAttribute('class', 'text-other');
+          newMessage.appendChild(username);
+          document.querySelector('#content').appendChild(newMessage);
+        }
+    </script>
+  </body>
+</html>

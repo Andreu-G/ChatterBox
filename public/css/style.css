@@ -1,0 +1,167 @@
+body {
+  background: linear-gradient(0deg, #111111, #222222);
+  background-size: 100vh;
+}
+
+#content-box {
+  width: 70%;
+  height: 95vh;
+  border-radius: 10px;
+  border: 1px solid rgba(217, 217, 217, 0.4);
+  box-shadow:
+  0 0 15px rgb(255, 255, 255);
+  color: white;
+}
+
+#userlist {
+  overflow-y: auto;
+  height: 80vh;
+}
+
+.separator {
+  height: 2px;
+  border-top: white;
+  box-shadow: 0 0 5px rgb(255, 255, 255);
+
+}
+
+#userlist-box {
+  width: 25%;
+  border-radius: 10px;
+  border: 1px solid rgba(217, 217, 217, 0.4);
+  box-shadow:
+  0 0 15px rgb(255, 255, 255);
+}
+
+#userlist-box h3 {
+  color: white;
+}
+
+#separator {
+  width: 5%;
+}
+
+#userlist h5 {
+  text-align: center;
+}
+
+#userlist article {
+  text-align: center;
+  font-size: 2rem;
+  overflow-wrap: break-word;
+}
+
+#content {
+  border-bottom: 1px solid black;
+  height: 90%;
+  overflow: auto;
+}
+
+#write-area {
+  border-top: 1px solid rgba(255, 255, 255, 0.4);
+  height: fit-content;
+}
+
+#write-area_content {
+  border-top: 1px solid cyan;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  box-shadow:
+  0 0 7px rgb(0, 255, 255);
+}
+
+#write-area_btn {
+  height: min-content;
+}
+
+.text-self {
+  padding: 15px 20px 15px 5px;
+  margin: 10px 20px 10px 60%;
+  text-align: right;
+  border-radius: 5px;
+  overflow-wrap: break-word;
+}
+
+.text-other {
+  padding: 15px 5px 15px 20px;
+  text-align: left;
+  margin: 10px 60% 10px 20px;
+  max-width: 40%;
+  border-radius: 5px;
+  overflow-wrap: break-word;
+}
+
+#user-text {
+  background: transparent;
+  color: white;
+}
+
+
+@media screen and (max-width: 768px)
+{
+  #main-content { 
+    flex-flow: column wrap;
+    max-height: max-content;
+  }
+
+  #content-box {
+    width: 100%;
+    height: 90vh;
+  }
+
+  #userlist-box {
+    width: 100%;
+    height: 100vh;
+  }
+  #write-area_btn {
+    margin-right: 15px;
+  }
+}
+
+
+.content-glow-white {
+  border-top: 1px rgb(255, 255, 255) solid;
+  box-shadow:
+  0 0 12px rgb(255, 255, 255);
+}
+
+.content-glow-cyan {
+  border: 1px rgb(0, 255, 251) solid;
+  box-shadow:
+  0 0 12px rgb(0, 225, 255);
+}
+
+.content-glow-orange {
+  border: 1px rgb(255, 150, 0) solid;
+  box-shadow:
+  0 0 12px rgb(255, 150, 0);
+}
+
+.content-glow-green {
+  border: 1px rgb(0, 255, 0) solid;
+  box-shadow:
+  0 0 12px rgb(0, 255, 0);
+}
+
+#login-box {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  text-align: center;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.footer-item {
+  color: #999999;
+  text-align: center;
+}
+
+.footer-separator {
+  border-top: 1px solid #777777;
+  max-height: 1px;
+  margin-bottom: 25px;
+}

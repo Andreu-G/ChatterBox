@@ -121,7 +121,7 @@
         function GetCurrentDate(){
 
           let date = new Date();
-          let formattedDate = `${String(date.getHours()).padStart(2,0)}:${String(date.getMinutes()).padStart(1, 0)}:${String(date.getSeconds()).padStart(1, 0)}`;
+          let formattedDate = `${String(date.getHours()).padStart(2,0)}:${String(date.getMinutes()).padStart(1, 0)}:${String(date.getSeconds()).padStart(2, 0)}`;
           return formattedDate;
           console.log(formattedDate);
         }

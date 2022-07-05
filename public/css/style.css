@@ -105,16 +105,23 @@ body {
   }
 
   #content-box {
-    width: 100%;
+    width: 95%;
     height: 90vh;
   }
 
   #userlist-box {
-    width: 100%;
+    width: 95%;
     height: 100vh;
   }
   #write-area_btn {
     margin-right: 15px;
+  }
+
+  #login-box {
+    height: 200vh;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
   }
 }
 
@@ -144,7 +151,7 @@ body {
 }
 
 #login-box {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100vh;
   text-align: center;
